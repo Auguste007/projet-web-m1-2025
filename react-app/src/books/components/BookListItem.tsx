@@ -1,95 +1,77 @@
-import { useState } from 'react'
-import type { BookModel, UpdateBookModel } from '../BookModel'
-import { Button, Col, Row } from 'antd'
-import {
-  CheckOutlined,
-  CloseOutlined,
-  DeleteOutlined,
-  EditOutlined,
-} from '@ant-design/icons'
-import { Link } from '@tanstack/react-router'
+import { useState } from 'react';
+import type { BookModel, UpdateBookModel } from '../BookModel';
+import { Avatar, Button, Col, Input, Row, Space, Typography } from 'antd';
+import { CheckOutlined, CloseOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Link } from '@tanstack/react-router';
 
 interface BookListItemProps {
-  book: BookModel
-  onDelete: (id: string) => void
-  onUpdate: (id: string, input: UpdateBookModel) => void
+  book: BookModel;
+  onDelete: (id: string) => void;
+  onUpdate: (id: string, input: UpdateBookModel) => void;
 }
 
 export function BookListItem({ book, onDelete, onUpdate }: BookListItemProps) {
-  const [title, setTitle] = useState(book.title)
-  const [isEditing, setIsEditing] = useState(false)
+  const [title, setTitle] = useState(book.title);
+  const [isEditing, setIsEditing] = useState(false);
 
   const onCancelEdit = () => {
-    setIsEditing(false)
-    setTitle(book.title)
-  }
+    setIsEditing(false);
+    setTitle(book.title);
+  };
 
   const onValidateEdit = () => {
-    onUpdate(book.id, { title })
-    setIsEditing(false)
-  }
+    onUpdate(book.id, { title });
+    setIsEditing(false);
+  };
 
   return (
     <Row
+      align="middle"
       style={{
         width: '100%',
-        height: '50px',
-        borderRadius: '10px',
-        backgroundColor: '#EEEEEE',
-        margin: '1rem 0',
-        padding: '.25rem',
-        display: 'flex',
-        justifyContent: 'space-between',
+        padding: '10px',
+        backgroundColor: '#fafafa',
+        borderRadius: '8px',
+        marginBottom: '1rem',
+        border: '1px solid #f0f0f0',
       }}
     >
-      <Col span={12} style={{ margin: 'auto 0' }}>
-        {isEditing ? (
-          <input value={title} onChange={e => setTitle(e.target.value)} />
-        ) : (
-          <Link
-            to={`/books/$bookId`}
-            params={{ bookId: book.id }}
-            style={{
-              margin: 'auto 0',
-              textAlign: 'left',
-            }}
-          >
-            <span style={{ fontWeight: 'bold' }}>{book.title}</span> -{' '}
-            {book.yearPublished}
-          </Link>
-        )}
+     
+      <Col span={2}>
+        <Avatar shape="square" size={48} src={book.photoUrl} />
       </Col>
-      <Col span={9} style={{ margin: 'auto 0' }}>
-        by <span style={{ fontWeight: 'bold' }}>{book.author.firstName}</span>{' '}
-        <span style={{ fontWeight: 'bold' }}>{book.author.lastName}</span>
+
+     
+      <Col span={16}>
+        <Space direction="vertical" align="start" size={0}>
+          {isEditing ? (
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+          ) : (
+            <Typography.Title level={5} style={{ margin: 0 }}>
+              <Link to={`/books/$bookId`} params={{ bookId: book.id }}>
+                {book.title}
+              </Link>
+            </Typography.Title>
+          )}
+          <Typography.Text type="secondary">
+            Par {book.author.firstName} {book.author.lastName} - Publié en {book.yearPublished}
+          </Typography.Text>
+        </Space>
       </Col>
-      <Col
-        span={3}
-        style={{
-          alignItems: 'right',
-          display: 'flex',
-          gap: '.25rem',
-          margin: 'auto 0',
-        }}
-      >
-        {isEditing ? (
-          <>
-            <Button type="primary" onClick={onValidateEdit}>
-              <CheckOutlined />
-            </Button>
-            <Button onClick={onCancelEdit}>
-              <CloseOutlined />
-            </Button>
-          </>
-        ) : (
-          <Button type="primary" onClick={() => setIsEditing(true)}>
-            <EditOutlined />
-          </Button>
-        )}
-        <Button type="primary" danger onClick={() => onDelete(book.id)}>
-          <DeleteOutlined />
-        </Button>
+
+      <Col span={6} style={{ textAlign: 'right' }}>
+        <Space>
+          {isEditing ? (
+            <>
+              <Button type="primary" onClick={onValidateEdit} icon={<CheckOutlined />} />
+              <Button onClick={onCancelEdit} icon={<CloseOutlined />} />
+            </>
+          ) : (
+            <Button type="primary" onClick={() => setIsEditing(true)} icon={<EditOutlined />} />
+          )}
+          <Button type="primary" danger onClick={() => onDelete(book.id)} icon={<DeleteOutlined />} />
+        </Space>
       </Col>
     </Row>
-  )
+  );
 }

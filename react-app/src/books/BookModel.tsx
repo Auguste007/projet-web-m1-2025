@@ -6,7 +6,8 @@ export type BookModel = {
     id: string
     firstName: string
     lastName: string
-  }
+  };
+  photoUrl?: string;
 }
 
 export type CreateBookModel = {

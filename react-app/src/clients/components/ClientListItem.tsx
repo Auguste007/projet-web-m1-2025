@@ -1,4 +1,4 @@
-import { Button, List, Popconfirm, Typography } from 'antd';
+import { Avatar, Button, List, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import type { ClientModel } from '../types/ClientModel';
 import { Link } from '@tanstack/react-router';
@@ -23,12 +23,16 @@ export function ClientListItem({ client, onDelete }: ClientListItemProps) {
         </Popconfirm>,
       ]}
     >
-      <Link to="/clients/$clientId" params={{ clientId: client.id }}>
-        <Typography.Text strong>
-          {client.prenom} {client.nom}
-        </Typography.Text>
-        {client.email && ` - ${client.email}`}
-      </Link>
+      <List.Item.Meta
+        avatar={<Avatar src={client.photoUrl} />}
+        title={
+          <Link to="/clients/$clientId" params={{ clientId: client.id }}>
+            {client.prenom} {client.nom}
+          </Link>
+        }
+        description={client.email}
+      />
+      <div>{client.booksBought} livre(s) acheté(s)</div>
     </List.Item>
   );
 }

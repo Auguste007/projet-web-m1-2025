@@ -10,3 +10,5 @@ export type CreateAuthorModel = {
   firstName: string;
   lastName: string;
 };
+
+export type UpdateAuthorModel = Partial<CreateAuthorModel>;

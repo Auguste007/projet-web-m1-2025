@@ -4,8 +4,14 @@ export type ClientModel = {
   prenom: string;
   email?: string;
   photoUrl?: string;
+  booksBought: number;
 };
 
-export type CreateClientModel = Omit<ClientModel, 'id'>;
+export type CreateClientModel = {
+  nom: string;
+  prenom: string;
+  email?: string;
+  photoUrl?: string;
+};
 
 export type UpdateClientModel = Partial<CreateClientModel>;
