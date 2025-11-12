@@ -5,3 +5,7 @@ export type ClientModel = {
   email?: string;
   photoUrl?: string;
 };
+
+export type CreateClientModel = Omit<ClientModel, 'id'>;
+
+export type UpdateClientModel = Partial<CreateClientModel>;

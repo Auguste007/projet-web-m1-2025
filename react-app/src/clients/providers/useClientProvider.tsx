@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import type { ClientModel } from '../types/ClientModel';
+import type { ClientModel, CreateClientModel } from '../types/ClientModel';
 
 export const useClientProvider = () => {
   const [clients, setClients] = useState<ClientModel[]>([]);
@@ -16,5 +16,17 @@ export const useClientProvider = () => {
       });
   };
 
-  return { clients, loadClients };
+   const createClient = (client: CreateClientModel) => {
+    axios
+      .post('http://localhost:3000/clients', client)
+      .then(() => {
+        
+        loadClients();
+      })
+      .catch(err => {
+        console.error('Erreur lors de la création du client:', err);
+      });
+  };
+
+  return { clients, loadClients, createClient };
 };
