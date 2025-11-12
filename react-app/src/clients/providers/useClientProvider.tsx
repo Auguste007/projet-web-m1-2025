@@ -28,5 +28,17 @@ export const useClientProvider = () => {
       });
   };
 
-  return { clients, loadClients, createClient };
+const deleteClient = (id: string) => {
+    axios
+      .delete(`http://localhost:3000/clients/${id}`)
+      .then(() => {
+        
+        loadClients();
+      })
+      .catch(err => {
+        console.error('Erreur lors de la suppression du client:', err);
+      });
+  };
+
+  return { clients, loadClients, createClient, deleteClient };
 };

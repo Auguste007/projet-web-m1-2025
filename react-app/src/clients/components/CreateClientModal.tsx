@@ -16,7 +16,7 @@ export function CreateClientModal({ onCreate }: CreateClientModalProps) {
   const handleOk = () => {
     onCreate({ nom, prenom });
     setIsOpen(false);
-    // On réinitialise les champs pour la prochaine ouverture
+    
     setNom('');
     setPrenom('');
   };
