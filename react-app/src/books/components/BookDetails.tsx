@@ -1,4 +1,4 @@
-import { Skeleton, Space, Typography } from 'antd';
+import { Skeleton, Space, Typography, Breadcrumb } from 'antd';
 import { useBookDetailsProvider } from '../providers/useBookDetailsProvider';
 import { useEffect } from 'react';
 import { ArrowLeftOutlined } from '@ant-design/icons';
@@ -17,24 +17,38 @@ export const BookDetails = ({ id }: BookDetailsProps) => {
     loadBook();
   }, [id]);
 
-  if (isLoading || !book) {
-    return <Skeleton active />;
-  }
-
   return (
     <Space direction="vertical" style={{ textAlign: 'left', width: '95%', padding: '1rem' }}>
+     
+      <Breadcrumb style={{ marginBottom: '16px' }}>
+        <Breadcrumb.Item>
+          <Link to={booksRoute.to}>Books</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          {isLoading ? 'Loading...' : book?.title}
+        </Breadcrumb.Item>
+      </Breadcrumb>
+      
       <Link to={booksRoute.to}>
         <ArrowLeftOutlined /> Retour à la liste
       </Link>
-      <Typography.Title level={1}>{book.title}</Typography.Title>
-      <Typography.Title level={3}>
-        Par {book.author.firstName} {book.author.lastName}
-      </Typography.Title>
-      <Typography.Text>Publié en {book.yearPublished}</Typography.Text>
 
-      <div style={{ marginTop: '2rem' }}>
-        <BuyBookModal bookId={book.id} /> 
-      </div>
+     
+      {isLoading || !book ? (
+        <Skeleton active />
+      ) : (
+        <>
+          <Typography.Title level={1}>{book.title}</Typography.Title>
+          <Typography.Title level={3}>
+            Par {book.author.firstName} {book.author.lastName}
+          </Typography.Title>
+          <Typography.Text>Publié en {book.yearPublished}</Typography.Text>
+
+          <div style={{ marginTop: '2rem' }}>
+            <BuyBookModal bookId={book.id} />
+          </div>
+        </>
+      )}
     </Space>
   );
 };
