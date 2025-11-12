@@ -12,7 +12,10 @@ export class ClientRepository {
   ) {}
 
   public async getAllClients(): Promise<ClientEntity[]> {
-    return this.clientRepository.find();
+    return this.clientRepository
+      .createQueryBuilder('client')
+      .loadRelationCountAndMap('client.booksBought', 'client.sales')
+      .getMany();
   }
 
   public async getClientById(id: ClientId): Promise<ClientEntity | null> {

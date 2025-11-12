@@ -12,7 +12,10 @@ export class AuthorRepository {
   ) {}
 
   public async getAllAuthors(): Promise<AuthorModel[]> {
-    return this.authorRepository.find();
+    return this.authorRepository
+      .createQueryBuilder('author')
+      .loadRelationCountAndMap('author.booksWritten', 'author.books')
+      .getMany();
   }
 
   public async createAuthor(author: CreateAuthorModel): Promise<AuthorModel> {
