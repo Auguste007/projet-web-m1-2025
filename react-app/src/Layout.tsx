@@ -3,7 +3,9 @@ import { Route as indexRoute } from './routes/index'
 import { Route as aboutRoute } from './routes/about'
 import { Route as booksRoute } from './routes/books'
 import { Route as clientsRoute } from './routes/clients';
+import { Route as authorsRoute } from './routes/authors';
 import { Space, type MenuProps } from 'antd'
+import { TeamOutlined } from '@ant-design/icons';
 import { BookOutlined, HomeOutlined, InfoOutlined, UserOutlined } from '@ant-design/icons'
 import Menu from 'antd/es/menu/menu'
 
@@ -27,6 +29,11 @@ export function Layout({ children }: LayoutProps) {
       label: <Link to={clientsRoute.to}>Clients</Link>, 
       key: 'clients',
       icon: <UserOutlined />,
+    },
+    {
+      label: <Link to={authorsRoute.to}>Auteurs</Link>, // <-- 3. AJOUTER LE LIEN
+      key: 'authors',
+      icon: <TeamOutlined />,
     },
     {
       label: <Link to={aboutRoute.to}>About</Link>,
