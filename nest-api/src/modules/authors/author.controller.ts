@@ -22,6 +22,11 @@ export class AuthorController {
     return this.authorService.getAuthorById(id);
   }
 
+  @Get(':id/stats')
+  getAuthorStats(@Param('id') id: AuthorId) {
+    return this.authorService.getAuthorStats(id);
+  }
+
   @Patch(':id')
   updateAuthor(@Param('id') id: AuthorId, @Body() updateAuthorDto: UpdateAuthorDto) {
     return this.authorService.updateAuthor(id, updateAuthorDto);

@@ -11,3 +11,5 @@ export type CreateAuthorModel = {
   lastName: string;
   photoUrl?: string;
 };
+
+export type UpdateAuthorModel = Partial<CreateAuthorModel>;
