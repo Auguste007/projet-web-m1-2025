@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AuthorId } from '../authors/author.entity';
 import {
   BookModel,
   CreateBookModel,
@@ -6,6 +7,7 @@ import {
   UpdateBookModel,
 } from './book.model';
 import { BookRepository } from './book.repository';
+import { BookEntity } from './entities/book.entity';
 
 @Injectable()
 export class BookService {
@@ -39,5 +41,9 @@ export class BookService {
 
   public async deleteBook(id: string): Promise<void> {
     await this.bookRepository.deleteBook(id);
+  }
+
+  public findBooksByAuthorId(authorId: AuthorId): Promise<BookEntity[]> {
+    return this.bookRepository.findBooksByAuthorId(authorId);
   }
 }

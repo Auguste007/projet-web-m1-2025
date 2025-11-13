@@ -1,17 +1,36 @@
-import { useState } from 'react'
-import type { BookModel } from '../BookModel'
+import { useState } from 'react';
+import axios from 'axios';
+import type { BookModel } from '../BookModel';
 
-export const useBookDetailsProvider = (id: string) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [book, setBook] = useState<BookModel | null>(null)
+type Sale = {
+  id: string;
+  dateAchat: string;
+  client: {
+    id: string;
+    nom: string;
+    prenom: string;
+    photoUrl?: string;
+  };
+};
 
-  const loadBook = () => {
-    setIsLoading(true)
-    fetch(`http://localhost:3000/books/${id}`)
-      .then(response => response.json())
-      .then(data => setBook(data))
-      .finally(() => setIsLoading(false))
-  }
+export const useBookDetailsProvider = (bookId: string) => {
+  const [book, setBook] = useState<BookModel | null>(null);
+  const [sales, setSales] = useState<Sale[]>([]); 
+  const [isLoading, setIsLoading] = useState(true);
 
-  return { isLoading, book, loadBook }
-}
+  const loadBookDetails = () => {
+    setIsLoading(true);
+    Promise.all([
+      axios.get(`http://localhost:3000/books/${bookId}`),
+      axios.get(`http://localhost:3000/sales/book/${bookId}`), 
+    ])
+      .then(([bookResponse, salesResponse]) => {
+        setBook(bookResponse.data);
+        setSales(salesResponse.data); 
+      })
+      .catch(err => console.error("Erreur chargement détails livre:", err))
+      .finally(() => setIsLoading(false));
+  };
+
+  return { book, sales, isLoading, loadBookDetails }; 
+};

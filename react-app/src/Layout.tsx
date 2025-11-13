@@ -31,7 +31,7 @@ export function Layout({ children }: LayoutProps) {
       icon: <UserOutlined />,
     },
     {
-      label: <Link to={authorsRoute.to}>Auteurs</Link>, // <-- 3. AJOUTER LE LIEN
+      label: <Link to={authorsRoute.to}>Auteurs</Link>, 
       key: 'authors',
       icon: <TeamOutlined />,
     },

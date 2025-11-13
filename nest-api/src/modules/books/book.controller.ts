@@ -11,6 +11,7 @@ import {
 import { CreateBookDto, GetBooksDto, UpdateBookDto } from './book.dto';
 import { GetBooksModel } from './book.model';
 import { BookService } from './book.service';
+import type { AuthorId } from '../authors/author.entity';
 
 @Controller('books')
 export class BookController {
@@ -40,6 +41,11 @@ export class BookController {
     return this.bookService.getBookById(id);
   }
 
+  @Get('author/:authorId')
+  findBooksByAuthor(@Param('authorId') authorId: AuthorId) {
+    return this.bookService.findBooksByAuthorId(authorId);
+  }
+
   @Post()
   createBook(@Body() createBookDto: CreateBookDto) {
     return this.bookService.createBook(createBookDto);
@@ -54,4 +60,6 @@ export class BookController {
   deleteBook(@Param('id') id: string) {
     return this.bookService.deleteBook(id);
   }
+
+  
 }

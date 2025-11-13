@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { AuthorEntity } from '../authors/author.entity';
+import { AuthorId } from '../authors/author.entity';
 import {
   BookModel,
   CreateBookModel,
@@ -92,6 +93,12 @@ export class BookRepository {
       await Promise.all(
         ids.map((id) => transactionalEntityManager.delete(BookEntity, { id })),
       );
+    });
+  }
+
+  public async findBooksByAuthorId(authorId: AuthorId): Promise<BookEntity[]> {
+    return this.bookRepository.find({
+      where: { authorId },
     });
   }
 }
