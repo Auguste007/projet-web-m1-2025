@@ -1,4 +1,4 @@
-import { Avatar, Button, List, Popconfirm, Typography } from 'antd';
+import { Avatar, Button, List, Popconfirm} from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import type { AuthorModel } from '../types/AuthorModel';
 import { Link } from '@tanstack/react-router';
